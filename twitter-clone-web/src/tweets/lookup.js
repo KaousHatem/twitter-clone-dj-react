@@ -5,9 +5,25 @@ export function apiTweetCreate(newTweet, callback) {
     backendLookup('POST','/tweets/create/',callback, {content:newTweet})
 }
 
-export function apiTweetList(callback){
-    
-    backendLookup("GET","/tweets/",callback)
-    
 
+export function apiTweetDetail(tweet_id,callback){
+  
+    backendLookup("GET",`/tweets/${tweet_id}/`,callback)
+
+}
+
+export function apiTweetList(username,callback){
+    let endpoint = "/tweets/"
+    if (username){
+        endpoint = `/tweets/?username=${username}`
+    }
+    backendLookup("GET",endpoint,callback)
+
+}
+
+
+export function apiTweetAction(tweetId,action,callback){
+    const data = {id:tweetId,action:action}
+    backendLookup("POST","/tweets/action/",callback,data)
+    
 }

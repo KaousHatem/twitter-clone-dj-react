@@ -2,13 +2,13 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
-import {TweetComponent} from './tweets'
+import {TweetComponent,TweetDetailComponent} from './tweets'
 import reportWebVitals from './reportWebVitals';
 
 
 const appEl = document.getElementById('root')
 
-const tweetEl = document.getElementById('tweet-row')
+
 if (appEl){
   ReactDOM.render(
   <React.StrictMode>
@@ -17,15 +17,20 @@ if (appEl){
   appEl
   );
 }
+const e = React.createElement
+const tweetEl = document.getElementById('tweet-row')
 
 if (tweetEl){
    ReactDOM.render(
-  <React.StrictMode>
-    <TweetComponent />
-  </React.StrictMode>,
-  tweetEl
-  );
+      e(TweetComponent,tweetEl.dataset),tweetEl);
 }
+
+const tweetDetailElement = document.querySelectorAll(".tweet-2-detail")
+
+tweetDetailElement.forEach(container=> {
+  ReactDOM.render(
+      e(TweetDetailComponent,container.dataset),container);
+})
 
 
 // If you want to start measuring performance in your app, pass a function

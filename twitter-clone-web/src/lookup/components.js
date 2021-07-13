@@ -46,7 +46,7 @@ export function backendLookup(method, endpoint, callback, data) {
       console.log(e)
       callback({"message":"The request was an error"},400)
     }
-    console.log('jsondata ',jsonData)
+    // console.log('jsondata ',jsonData)
     xhr.send(jsonData)
 }
 
