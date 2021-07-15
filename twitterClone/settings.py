@@ -46,6 +46,8 @@ INSTALLED_APPS = [
     'corsheaders',
     'rest_framework',
     # internal
+    'profiles',
+    'accounts',
     'tweets',
 
 ]
@@ -160,6 +162,6 @@ if DEBUG:
     ]
 REST_FRAMEWORK = {
     
-    'DEFAULT_AUTHENTICATION_CLASSES': DEFAULT_AUTHENTICATION_CLASSES,
+    # 'DEFAULT_AUTHENTICATION_CLASSES': DEFAULT_AUTHENTICATION_CLASSES,
     'DEFAULT_RENDERER_CLASSES': DEFAULT_RENDERER_CLASSES
 }
