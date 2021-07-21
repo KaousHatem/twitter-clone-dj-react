@@ -6,6 +6,7 @@ from django.conf import settings
 
 from rest_framework.authentication import   SessionAuthentication
 from rest_framework.response import Response
+from rest_framework.pagination import PageNumberPagination
 from rest_framework.decorators import api_view, permission_classes, authentication_classes
 from rest_framework.permissions import IsAuthenticated
 
@@ -39,6 +40,20 @@ def tweet_list_view(request, *args, **kwargs):
         qs = qs.filter(user__username__iexact=username)
     serializer = TweetSerializer(qs, many=True)
     return Response(serializer.data)
+
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def tweet_feed_view(request, *args, **kwargs):
+    paginator = PageNumberPagination()
+    paginator.page_size = 20
+    user = request.user
+    qs = Tweet.objects.feed(user)
+    paginated_qs = paginator.paginate_queryset(qs, request)
+    serializer = TweetSerializer(paginated_qs, many=True)
+    return paginator.get_paginated_response(serializer.data)
+
+
 
 @api_view(['GET'])
 def tweet_detail_view(request,tweet_id, *args, **kwargs):
