@@ -18,21 +18,20 @@ class TweetLike(models.Model):
     timestamp = models.DateTimeField(auto_now_add=True)
 
 
-class TweetQuerySet(models.Model):
+class TweetQuerySet(models.QuerySet):
     def feed(self,user):
         profiles_exist = user.following.exists()
-        profiles = user.following.all()
         followed_user_id = []
         if profiles_exist:
             followed_user_id = user.following.values_list("user__id",flat=True) #[x.user.id for x in profiles]
-        qs = self.filter(
+        return self.filter(
             Q(user__id__in=followed_user_id) |
             Q(user=user)
         ).distinct().order_by("-timestamp")
 
-class TweetManager(models.Model):
+class TweetManager(models.Manager):
     def get_queryset(self, *args, **kwargs):
-        return TweetQuerySet(self.model,using=self._db)
+        return TweetQuerySet(self.model, using=self._db)
 
     def feed(self,user):
         return self.get_queryset().feed(user)

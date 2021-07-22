@@ -25,7 +25,7 @@ export function TweetsList(props){
       // do my lookup
       const handleTweetListLookup = (response,status) => {
         if (status === 200){
-          setTweetsInit(response)
+          setTweetsInit(response.results)
           setTweetsDidSet(true)
         }
         
